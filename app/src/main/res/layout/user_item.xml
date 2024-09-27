@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="10.40dp"
+                android:textSize="15sp"
                 android:text="Status"/>
 
         </LinearLayout>

@@ -4,9 +4,11 @@ package com.example.chatapp;
 import static com.example.chatapp.chatwindo.reciverIImg;
 import static com.example.chatapp.chatwindo.senderImg;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,40 +48,55 @@ public class messagesAdpter extends RecyclerView.Adapter {
 
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         msgModelclass messages = messagesAdpterArrayList.get(position);
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                new AlertDialog.Builder(context).setTitle("Delete")
+                new AlertDialog.Builder(view.getContext()) // Get context from view
+                        .setTitle("Delete")
                         .setMessage("Are you sure you want to delete this message?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                deleteMessage(position); // Delete message at the correct position
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                             }
-                        }).show();
-
-                return false;
+                        })
+                        .show();
+                return true;
             }
         });
-        if (holder.getClass()==senderVierwHolder.class){
+
+        // Handle the view based on message type
+        if (holder instanceof senderVierwHolder) {
             senderVierwHolder viewHolder = (senderVierwHolder) holder;
             viewHolder.msgtxt.setText(messages.getMessage());
             Picasso.get().load(senderImg).into(viewHolder.circleImageView);
-        }else { reciverViewHolder viewHolder = (reciverViewHolder) holder;
+        } else if (holder instanceof reciverViewHolder) {
+            reciverViewHolder viewHolder = (reciverViewHolder) holder;
             viewHolder.msgtxt.setText(messages.getMessage());
             Picasso.get().load(reciverIImg).into(viewHolder.circleImageView);
-
-
         }
     }
+
+    // Method to delete message
+    private void deleteMessage(int position) {
+        if (position >= 0 && position < messagesAdpterArrayList.size()) {
+            messagesAdpterArrayList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, messagesAdpterArrayList.size());
+        } else {
+            Log.e("DeleteMessage", "Invalid position: " + position);
+        }
+    }
+
 
     @Override
     public int getItemCount() {
