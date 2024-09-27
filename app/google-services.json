@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "754797842631",
+    "project_id": "chatapp-bafeb",
+    "storage_bucket": "chatapp-bafeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754797842631:android:18d56d4b380635b171eee2",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvZxYDJGU90s7zeByXOjq0mAXXq7Mcybs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
